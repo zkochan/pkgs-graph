@@ -1,0 +1,40 @@
+{
+  "name": "create-pkg-graph",
+  "version": "0.0.0",
+  "description": "Create a package graph of packages in a folder",
+  "main": "index.js",
+  "scripts": {
+    "test": "ts-node test",
+    "tsc": "tsc",
+    "prepublish": "npm run tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zkochan/create-pkg-graph.git"
+  },
+  "author": "Zoltan Kochan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zkochan/create-pkg-graph/issues"
+  },
+  "homepage": "https://github.com/zkochan/create-pkg-graph#readme",
+  "devDependencies": {
+    "@types/tape": "^4.2.29",
+    "tape": "^4.6.3",
+    "ts-node": "^3.0.2",
+    "typescript": "^2.2.2"
+  },
+  "dependencies": {
+    "@types/chalk": "^0.4.31",
+    "@types/common-tags": "^1.2.5",
+    "@types/node": "^7.0.12",
+    "@types/ramda": "^0.0.5",
+    "@types/semver": "^5.3.31",
+    "chalk": "^1.1.3",
+    "common-tags": "^1.4.0",
+    "find-packages": "^2.0.0",
+    "major-versions": "^2.0.1",
+    "ramda": "^0.23.0",
+    "semver": "^5.3.0"
+  }
+}
