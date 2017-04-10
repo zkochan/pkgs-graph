@@ -8,7 +8,7 @@ import majors = require('major-versions')
 const oneLine = commonTags.oneLine
 const highlight = chalk.yellow
 
-type Manifest = {
+export type Manifest = {
   name: string,
   version: string,
   dependencies: {
@@ -22,19 +22,20 @@ type Manifest = {
   },
 }
 
-type Package = {
+export type Package = {
   manifest: Manifest,
   path: string,
 }
 
-type PackageNode = Package & {
-  dependencies: Package[]
+export type PackageNode = Package & {
+  dependencies: PackageNode[],
+  depth: number,
 }
 
 export default async function (
   root: string,
   opts?: { ignore?: string[] }
-) {
+): Promise<PackageNode[]> {
   const pkgs: Package[] = await findPackages(root, {
     ignore: opts && opts.ignore
   })

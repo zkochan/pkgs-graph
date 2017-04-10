@@ -2,7 +2,8 @@
   "name": "create-pkg-graph",
   "version": "0.0.0",
   "description": "Create a package graph of packages in a folder",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "ts-node test",
     "tsc": "tsc",
