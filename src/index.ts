@@ -11,13 +11,13 @@ const highlight = chalk.yellow
 export type Manifest = {
   name: string,
   version: string,
-  dependencies: {
+  dependencies?: {
     [name: string]: string,
   },
-  devDependencies: {
+  devDependencies?: {
     [name: string]: string,
   },
-  optionalDependencies: {
+  optionalDependencies?: {
     [name: string]: string,
   },
 }
@@ -31,28 +31,17 @@ export type PackageNode = Package & {
   dependencies: string[],
 }
 
-export default async function (
-  root: string,
-  opts?: { ignore?: string[] }
-): Promise<PackageNode[]> {
-  const pkgs: Package[] = await findPackages(root, {
-    ignore: opts && opts.ignore
-  })
-
+export default function (pkgs: Package[]): {[id: string]: PackageNode} {
   const pkgMap = createPkgMap(pkgs)
   const pkgNodeMap = Object.keys(pkgMap)
     .reduce((acc, pkgSpec) => {
       acc[pkgSpec] = Object.assign({}, pkgMap[pkgSpec], {
-        pkgSpec,
         dependencies: createNode(pkgMap[pkgSpec])
       })
       return acc
     }, {})
 
-  return <PackageNode[]>R.props(
-    toposort(R.values(pkgNodeMap).reduce((acc: any[], pkgNode: any) => R.concat(acc, R.xprod(pkgNode.dependencies, [pkgNode.pkgSpec])), [])),
-    pkgNodeMap
-  )
+  return pkgNodeMap
 
   function createNode(pkg: Package): string[] {
     const dependencies = Object.assign({},

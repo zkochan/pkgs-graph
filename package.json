@@ -4,6 +4,9 @@
   "description": "Create a graph from an array of packages",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "ts-node test",
     "tsc": "tsc",

@@ -1,27 +1,82 @@
 import test = require('tape')
-import path = require('path')
 import createPkgGraph from '../src'
 
-const fixtureDir = path.join(__dirname, 'fixture')
-
 test('create package graph', t => {
-  const root = path.join(fixtureDir, '1')
-  createPkgGraph(root)
-    .then(tree => {
-      t.end()
-    })
-    .catch(t.end)
-})
-
-test('create package graph for circular deps', t => {
-  const root = path.join(fixtureDir, 'circular')
-  createPkgGraph(root)
-    .then(tree => {
-      t.fail('Should have failed on cyclic dependencies')
-      t.end()
-    })
-    .catch(err => {
-      t.pass()
-      t.end()
-    })
+  const graph = createPkgGraph([
+    {
+      manifest: {
+        name: 'bar',
+        version: '1.0.0',
+        dependencies: {
+          foo: '^1.0.0'
+        }
+      },
+      path: '/zkochan/src/bar',
+    },
+    {
+      manifest: {
+        name: 'foo',
+        version: '1.0.0',
+      },
+      path: '/zkochan/src/foo',
+    },
+    {
+      manifest: {
+        name: 'bar',
+        version: '2.0.0',
+        dependencies: {
+          foo: '^2.0.0'
+        }
+      },
+      path: '/zkochan/src/bar@2',
+    },
+    {
+      manifest: {
+        name: 'foo',
+        version: '2.0.0',
+      },
+      path: '/zkochan/src/foo@2',
+    },
+  ])
+  t.deepEqual(graph, {
+    'bar@1.0.0': {
+      manifest: {
+        name: 'bar',
+        version: '1.0.0',
+        dependencies: {
+          foo: '^1.0.0'
+        }
+      },
+      path: '/zkochan/src/bar',
+      dependencies: ['foo@1.0.0'],
+    },
+    'foo@1.0.0': {
+      manifest: {
+        name: 'foo',
+        version: '1.0.0',
+      },
+      path: '/zkochan/src/foo',
+      dependencies: [],
+    },
+    'bar@2.0.0': {
+      manifest: {
+        name: 'bar',
+        version: '2.0.0',
+        dependencies: {
+          foo: '^2.0.0'
+        }
+      },
+      path: '/zkochan/src/bar@2',
+      dependencies: ['foo@2.0.0'],
+    },
+    'foo@2.0.0': {
+      manifest: {
+        name: 'foo',
+        version: '2.0.0',
+      },
+      path: '/zkochan/src/foo@2',
+      dependencies: [],
+    },
+  })
+  t.end()
 })
