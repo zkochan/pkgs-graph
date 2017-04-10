@@ -3,7 +3,6 @@ import semver = require('semver')
 import commonTags = require('common-tags')
 import chalk = require('chalk')
 import R = require('ramda')
-import majors = require('major-versions')
 
 const oneLine = commonTags.oneLine
 const highlight = chalk.yellow
@@ -61,8 +60,11 @@ export default async function (
     return Object.keys(dependencies)
       .map(depName => {
         const range = dependencies[depName]
-        const major = getMajorFromRange(range)
-        return `${depName}@${major}`
+        const pkgs = R.values(pkgMap).filter(pkg => pkg.manifest.name === depName)
+        if (!pkgs.length) return ''
+        const matched = semver.maxSatisfying(pkgs.map(pkg => pkg.manifest.version), range)
+        const matchedPkg = pkgs.find(pkg => pkg.manifest.name === depName && pkg.manifest.version === matched)
+        return createPkgMajorId(matchedPkg!.manifest.name, matchedPkg!.manifest.version, matchedPkg!.path)
       })
       .filter(pkgMajorId => pkgMap[pkgMajorId])
       .filter(pkgMajorId => areCompatible(pkg.manifest.name, dependencies[pkgMap[pkgMajorId].manifest.name], pkgMap[pkgMajorId].manifest))
@@ -99,7 +101,7 @@ function createPkgMap(pkgs: Package[]): {
 } {
   const pkgMap = {}
   for (let pkg of pkgs) {
-    const pkgMajorId = createPkgMajorId(pkg.manifest.name, pkg.manifest.version)
+    const pkgMajorId = createPkgMajorId(pkg.manifest.name, pkg.manifest.version, pkg.path)
     if (pkgMap[pkgMajorId]) {
       throw new Error(`There are two ${pkg.manifest.name} packages of the same major versions in the monorepo.
         Either remove or ignore one of them.
@@ -111,7 +113,8 @@ function createPkgMap(pkgs: Package[]): {
   return pkgMap
 }
 
-function createPkgMajorId(name: string, version: string) {
+function createPkgMajorId(name: string, version: string, pkgPath: string) {
+  if (!name || !version) return pkgPath
   const major = semver.major(version)
   return `${name}@${major}`
 }
@@ -128,11 +131,4 @@ function areCompatible(dependentName: string, dependentRange: string, dependency
     ${highlight(needed)}
   `)
   return false
-}
-
-function getMajorFromRange(range: string): string {
-  const major = majors(range)[0]
-  const index = major.indexOf('.')
-  if (index === -1) return major
-  return major.substr(0, index)
 }
