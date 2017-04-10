@@ -62,7 +62,12 @@ export default async function (
         const range = dependencies[depName]
         const pkgs = R.values(pkgMap).filter(pkg => pkg.manifest.name === depName)
         if (!pkgs.length) return ''
-        const matched = semver.maxSatisfying(pkgs.map(pkg => pkg.manifest.version), range)
+        const versions = pkgs.map(pkg => pkg.manifest.version)
+        if (versions.indexOf(range) !== -1) {
+          const matchedPkg = pkgs.find(pkg => pkg.manifest.name === depName && pkg.manifest.version === range)
+          return createPkgSpec(matchedPkg!)
+        }
+        const matched = semver.maxSatisfying(versions, range)
         if (!matched) {
           console.warn(oneLine`
             Cannot find local package ${highlight(depName)} satisfying ${highlight(range)}
