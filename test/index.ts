@@ -8,6 +8,7 @@ test('create package graph', t => {
         name: 'bar',
         version: '1.0.0',
         dependencies: {
+          'is-positive': '1.0.0',
           foo: '^1.0.0'
         }
       },
@@ -17,6 +18,9 @@ test('create package graph', t => {
       manifest: {
         name: 'foo',
         version: '1.0.0',
+        dependencies: {
+          bar: '^10.0.0'
+        }
       },
       path: '/zkochan/src/foo',
     },
@@ -44,6 +48,7 @@ test('create package graph', t => {
         name: 'bar',
         version: '1.0.0',
         dependencies: {
+          'is-positive': '1.0.0',
           foo: '^1.0.0'
         }
       },
@@ -54,6 +59,9 @@ test('create package graph', t => {
       manifest: {
         name: 'foo',
         version: '1.0.0',
+        dependencies: {
+          bar: '^10.0.0'
+        }
       },
       path: '/zkochan/src/foo',
       dependencies: [],

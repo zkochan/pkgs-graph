@@ -69,6 +69,7 @@ export default function (pkgs: Package[]): {[id: string]: PackageNode} {
         const matchedPkg = pkgs.find(pkg => pkg.manifest.name === depName && pkg.manifest.version === matched)
         return createPkgSpec(matchedPkg!)
       })
+      .filter(Boolean)
   }
 }
 
