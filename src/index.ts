@@ -77,17 +77,20 @@ function toTree(pkgsMap) {
     }
   }
   const entries = Object.keys(pkgsMap).filter(pkgId => !dependents[pkgId] || !dependents[pkgId].length)
-  return entries.map(entry => resolveTree(entry, pkgsMap, [entry]))
+  return resolvePackageNodes(entries, pkgsMap, [])
 }
 
-function resolveTree(majorId: string, pkgsMap, keypath: string[]) {
-  const entryPkg = pkgsMap[majorId]
-  return {
-    manifest: entryPkg.manifest,
-    path: entryPkg.path,
-    dependencies: entryPkg.dependencies.map(depId => resolveTree(depId, pkgsMap, R.append(depId, keypath))),
-    depth: keypath.length,
-  }
+function resolvePackageNodes(entries, pkgsMap, keypath: string[]) {
+  return entries.reduce((acc, entry) => {
+    const entryPkg = pkgsMap[entry]
+    const dependencies = resolvePackageNodes(entryPkg.dependencies, pkgsMap, R.append(entry, keypath))
+    return acc.concat([{
+      manifest: entryPkg.manifest,
+      path: entryPkg.path,
+      dependencies,
+      depth: keypath.length,
+    }].concat(dependencies))
+  }, [])
 }
 
 function createPkgMap(pkgs: Package[]): {
