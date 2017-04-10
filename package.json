@@ -1,7 +1,7 @@
 {
-  "name": "create-pkg-graph",
+  "name": "pkgs-graph",
   "version": "0.0.0",
-  "description": "Create a package graph of packages in a folder",
+  "description": "Create a graph from an array of packages",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zkochan/create-pkg-graph.git"
+    "url": "git+https://github.com/zkochan/pkgs-graph.git"
   },
   "author": "Zoltan Kochan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zkochan/create-pkg-graph/issues"
+    "url": "https://github.com/zkochan/pkgs-graph/issues"
   },
-  "homepage": "https://github.com/zkochan/create-pkg-graph#readme",
+  "homepage": "https://github.com/zkochan/pkgs-graph#readme",
   "devDependencies": {
     "@types/tape": "^4.2.29",
     "tape": "^4.6.3",
