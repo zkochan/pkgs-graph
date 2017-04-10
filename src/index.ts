@@ -28,8 +28,7 @@ export type Package = {
 }
 
 export type PackageNode = Package & {
-  dependencies: PackageNode[],
-  depth: number,
+  dependencies: string[],
 }
 
 export default async function (
@@ -50,11 +49,10 @@ export default async function (
       return acc
     }, {})
 
-  toposort(
-    R.values(pkgNodeMap)
-      .reduce((acc: any[], pkgNode: any) => R.concat(acc, R.xprod(pkgNode.dependencies, [pkgNode.pkgSpec])), []))
-
-  return toTree(pkgNodeMap)
+  return <PackageNode[]>R.props(
+    toposort(R.values(pkgNodeMap).reduce((acc: any[], pkgNode: any) => R.concat(acc, R.xprod(pkgNode.dependencies, [pkgNode.pkgSpec])), [])),
+    pkgNodeMap
+  )
 
   function createNode(pkg: Package): string[] {
     const dependencies = Object.assign({},
@@ -83,31 +81,6 @@ export default async function (
         return createPkgSpec(matchedPkg!)
       })
   }
-}
-
-function toTree(pkgsMap) {
-  const dependents = {}
-  for (let pkg of R.values<any>(pkgsMap)) {
-    for (let depId of pkg.dependencies) {
-      dependents[depId] = dependents[depId] || []
-      dependents[depId].push(pkg.pkgSpec)
-    }
-  }
-  const entries = Object.keys(pkgsMap).filter(pkgId => !dependents[pkgId] || !dependents[pkgId].length)
-  return resolvePackageNodes(entries, pkgsMap, [])
-}
-
-function resolvePackageNodes(entries, pkgsMap, keypath: string[]) {
-  return entries.reduce((acc, entry) => {
-    const entryPkg = pkgsMap[entry]
-    const dependencies = resolvePackageNodes(entryPkg.dependencies, pkgsMap, R.append(entry, keypath))
-    return acc.concat([{
-      manifest: entryPkg.manifest,
-      path: entryPkg.path,
-      dependencies,
-      depth: keypath.length,
-    }].concat(dependencies))
-  }, [])
 }
 
 function createPkgMap(pkgs: Package[]): {
