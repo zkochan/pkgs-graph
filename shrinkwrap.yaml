@@ -11,6 +11,7 @@ dependencies:
   ramda@^0.23.0: 0.23.0
   semver@^5.3.0: 5.3.0
   tape@^4.6.3: 4.6.3
+  toposort@^1.0.3: 1.0.3
   ts-node@^3.0.2: 3.0.2
   typescript@^2.2.2: 2.2.2
 packages:
@@ -250,6 +251,7 @@ packages:
       through: 2.3.8
     resolution: 637e77581e9ab2ce17577e9bd4ce4f575806d8b6
   /through/2.3.8: 0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5
+  /toposort/1.0.3: f02cd8a74bd8be2fc0e98611c3bacb95a171869c
   /ts-node/3.0.2:
     dependencies:
       arrify: 1.0.1

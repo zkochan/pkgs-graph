@@ -3,6 +3,7 @@ import semver = require('semver')
 import commonTags = require('common-tags')
 import chalk = require('chalk')
 import R = require('ramda')
+import toposort = require('toposort')
 
 const oneLine = commonTags.oneLine
 const highlight = chalk.yellow
@@ -48,6 +49,10 @@ export default async function (
       })
       return acc
     }, {})
+
+  toposort(
+    R.values(pkgNodeMap)
+      .reduce((acc: any[], pkgNode: any) => R.concat(acc, R.xprod(pkgNode.dependencies, [pkgNode.pkgSpec])), []))
 
   return toTree(pkgNodeMap)
 

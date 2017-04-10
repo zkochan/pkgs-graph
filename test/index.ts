@@ -17,7 +17,11 @@ test('create package graph for circular deps', t => {
   const root = path.join(fixtureDir, 'circular')
   createPkgGraph(root)
     .then(tree => {
+      t.fail('Should have failed on cyclic dependencies')
       t.end()
     })
-    .catch(t.end)
+    .catch(err => {
+      t.pass()
+      t.end()
+    })
 })
