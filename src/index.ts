@@ -41,10 +41,10 @@ export default async function (
 
   const pkgMap = createPkgMap(pkgs)
   const pkgNodeMap = Object.keys(pkgMap)
-    .reduce((acc, pkgMajorId) => {
-      acc[pkgMajorId] = Object.assign({}, pkgMap[pkgMajorId], {
-        pkgMajorId,
-        dependencies: createNode(pkgMap[pkgMajorId])
+    .reduce((acc, pkgSpec) => {
+      acc[pkgSpec] = Object.assign({}, pkgMap[pkgSpec], {
+        pkgSpec,
+        dependencies: createNode(pkgMap[pkgSpec])
       })
       return acc
     }, {})
@@ -63,11 +63,15 @@ export default async function (
         const pkgs = R.values(pkgMap).filter(pkg => pkg.manifest.name === depName)
         if (!pkgs.length) return ''
         const matched = semver.maxSatisfying(pkgs.map(pkg => pkg.manifest.version), range)
+        if (!matched) {
+          console.warn(oneLine`
+            Cannot find local package ${highlight(depName)} satisfying ${highlight(range)}
+          `)
+          return ''
+        }
         const matchedPkg = pkgs.find(pkg => pkg.manifest.name === depName && pkg.manifest.version === matched)
-        return createPkgMajorId(matchedPkg!.manifest.name, matchedPkg!.manifest.version, matchedPkg!.path)
+        return createPkgSpec(matchedPkg!)
       })
-      .filter(pkgMajorId => pkgMap[pkgMajorId])
-      .filter(pkgMajorId => areCompatible(pkg.manifest.name, dependencies[pkgMap[pkgMajorId].manifest.name], pkgMap[pkgMajorId].manifest))
   }
 }
 
@@ -76,7 +80,7 @@ function toTree(pkgsMap) {
   for (let pkg of R.values<any>(pkgsMap)) {
     for (let depId of pkg.dependencies) {
       dependents[depId] = dependents[depId] || []
-      dependents[depId].push(pkg.pkgMajorId)
+      dependents[depId].push(pkg.pkgSpec)
     }
   }
   const entries = Object.keys(pkgsMap).filter(pkgId => !dependents[pkgId] || !dependents[pkgId].length)
@@ -101,34 +105,19 @@ function createPkgMap(pkgs: Package[]): {
 } {
   const pkgMap = {}
   for (let pkg of pkgs) {
-    const pkgMajorId = createPkgMajorId(pkg.manifest.name, pkg.manifest.version, pkg.path)
-    if (pkgMap[pkgMajorId]) {
-      throw new Error(`There are two ${pkg.manifest.name} packages of the same major versions in the monorepo.
+    const spec = createPkgSpec(pkg)
+    if (pkgMap[spec]) {
+      throw new Error(`There are two ${pkg.manifest.name} packages of the same version in the monorepo.
         Either remove or ignore one of them.
-        One at ${pkgMap[pkgMajorId].path}
+        One at ${pkgMap[spec].path}
         The other at ${pkg.path}`)
     }
-    pkgMap[pkgMajorId] = pkg
+    pkgMap[spec] = pkg
   }
   return pkgMap
 }
 
-function createPkgMajorId(name: string, version: string, pkgPath: string) {
-  if (!name || !version) return pkgPath
-  const major = semver.major(version)
-  return `${name}@${major}`
-}
-
-function areCompatible(dependentName: string, dependentRange: string, dependency: Manifest) {
-  if (semver.satisfies(dependency.version, dependentRange)) {
-    return true
-  }
-  const available = `${dependency.name}@${dependency.version}`
-  const needed = `${dependency.name}@${dependentRange}`
-  console.warn(oneLine`
-    Local ${highlight(available)}
-    cannot be used by ${highlight(dependentName)} which needs
-    ${highlight(needed)}
-  `)
-  return false
+function createPkgSpec(pkg: Package) {
+  if (!pkg.manifest.name || !pkg.manifest.version) return pkg.path
+  return `${pkg.manifest.name}@${pkg.manifest.version}`
 }
