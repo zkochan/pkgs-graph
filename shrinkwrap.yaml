@@ -1,13 +1,13 @@
 dependencies:
   '@types/chalk@^0.4.31': 0.4.31
   '@types/common-tags@^1.2.5': 1.2.5
-  '@types/node@^7.0.12': 7.0.12
+  '@types/node@^7.0.12': 7.0.13
   '@types/ramda@^0.0.5': 0.0.5
   '@types/semver@^5.3.31': 5.3.31
   '@types/tape@^4.2.29': 4.2.29
   chalk@^1.1.3: 1.1.3
   common-tags@^1.4.0: 1.4.0
-  find-packages@^2.0.0: 2.0.0
+  find-packages@^2.0.0: 2.1.0
   ramda@^0.23.0: 0.23.0
   semver@^5.3.0: 5.3.0
   tape@^4.6.3: 4.6.3
@@ -17,12 +17,12 @@ dependencies:
 packages:
   /@types/chalk/0.4.31: a31d74241a6b1edbb973cf36d97a2896834a51f9
   /@types/common-tags/1.2.5: 14f29893992eb325594b83d739af02f2b6520f46
-  /@types/node/7.0.12: ae5f67a19c15f752148004db07cbbb372e69efc9
+  /@types/node/7.0.13: 1b0a53fe9ef9c3a5d061b126cc9b915bca43a3f5
   /@types/ramda/0.0.5: 8b381e3363de9db3cb89d3b62f23b73cfb56bc0b
   /@types/semver/5.3.31: b999d7d935f43f5207b01b00d3de20852f4ca75f
   /@types/tape/4.2.29:
     dependencies:
-      '@types/node': 7.0.12
+      '@types/node': 7.0.13
     resolution: 14cf2eb49bf852407eaaefdc53773eb90b32cf56
   /ansi-regex/2.1.1: c3b33ab5ee360d86e0e628f0468ae7ef27d654df
   /ansi-styles/2.2.1: b432dd3358b634cf75e1e4664368240533c1ddbe
@@ -84,13 +84,13 @@ packages:
       is-symbol: 1.0.1
     resolution: 45355248a88979034b6792e19bb81f2b7975dd0d
   /escape-string-regexp/1.0.5: 1b61c0562190a8dff6ae3bb2cf0200ca130b86d4
-  /find-packages/2.0.0:
+  /find-packages/2.1.0:
     dependencies:
-      '@types/node': 7.0.12
+      '@types/node': 7.0.13
       globby: 6.1.0
       p-filter: 1.0.0
       read-pkg: 2.0.0
-    resolution: a72f8c220512be9298d191eeaffdd1e9819ea702
+    resolution: cd31cef5fb709274deba8e04c06e957c76f9d561
   /for-each/0.3.2:
     dependencies:
       is-function: 1.0.1
@@ -124,7 +124,7 @@ packages:
     dependencies:
       function-bind: 1.1.0
     resolution: 8461733f538b0837c9361e39a9ab9e9704dc2f28
-  /hosted-git-info/2.4.1: 4b0445e41c004a8bd1337773a4ff790ca40318c8
+  /hosted-git-info/2.4.2: 0076b9f46a270506ddbaaea56496897460612a67
   /inflight/1.0.6:
     dependencies:
       once: 1.4.0
@@ -162,13 +162,13 @@ packages:
     dependencies:
       minimist: 0.0.8
     resolution: 30057438eac6cf7f8c4767f38648d6697d75c903
-  /normalize-package-data/2.3.6:
+  /normalize-package-data/2.3.8:
     dependencies:
-      hosted-git-info: 2.4.1
+      hosted-git-info: 2.4.2
       is-builtin-module: 1.0.0
       semver: 5.3.0
       validate-npm-package-license: 3.0.1
-    resolution: 498fa420c96401f787402ba21e600def9f981fff
+    resolution: d819eda2a9dedbd1ffa563ea4071d936782295bb
   /object-assign/4.1.1: 2109adc7965887cfc05cbbd442cac8bfbb360863
   /object-inspect/1.2.2: c82115e4fcc888aea14d64c22e4f17f6a70d5e5a
   /object-keys/1.0.11: c54601778ad560f1142ce0e01bcca8b56d13426d
@@ -200,7 +200,7 @@ packages:
   /read-pkg/2.0.0:
     dependencies:
       load-json-file: 2.0.0
-      normalize-package-data: 2.3.6
+      normalize-package-data: 2.3.8
       path-type: 2.0.0
     resolution: 8ef1c0623c6a6db0dc6713c4bfac46332b2368f8
   /regenerator-runtime/0.10.3: 8c4367a904b51ea62a908ac310bf99ff90a82a3e
@@ -262,7 +262,7 @@ packages:
       mkdirp: 0.5.1
       source-map-support: 0.4.14
       tsconfig: 6.0.0
-      v8flags: 2.0.12
+      v8flags: 2.1.1
       yn: 1.2.0
     resolution: cfc9516c831b920d7efbe16005915062b1294f8c
   /tsconfig/6.0.0:
@@ -272,10 +272,10 @@ packages:
     resolution: 6b0e8376003d7af1864f8df8f89dd0059ffcd032
   /typescript/2.2.2: 606022508479b55ffa368b58fee963a03dfd7b0c
   /user-home/1.1.1: 2b5be23a32b63a7c9deb8d0f28d485724a3df190
-  /v8flags/2.0.12:
+  /v8flags/2.1.1:
     dependencies:
       user-home: 1.1.1
-    resolution: 73235d9f7176f8e8833fb286795445f7938d84e5
+    resolution: aab1a1fa30d45f88dd321148875ac02c0b55e5b4
   /validate-npm-package-license/3.0.1:
     dependencies:
       spdx-correct: 1.0.2
