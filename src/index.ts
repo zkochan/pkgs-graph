@@ -4,6 +4,8 @@ import commonTags = require('common-tags')
 import chalk = require('chalk')
 import R = require('ramda')
 import toposort = require('toposort')
+import npa = require('npm-package-arg')
+import path = require('path')
 
 const oneLine = commonTags.oneLine
 const highlight = chalk.yellow
@@ -51,7 +53,20 @@ export default function (pkgs: Package[]): {[id: string]: PackageNode} {
 
     return Object.keys(dependencies)
       .map(depName => {
+        const spec = npa.resolve(depName, dependencies[depName], pkg.path)
+
+        if (spec.type === 'directory') {
+          const matchedPkg = R.values(pkgMap).find(pkg => pkg.path === spec.fetchSpec)
+          if (!matchedPkg) {
+            return ''
+          }
+          return createPkgSpec(matchedPkg!)
+        }
+
+        if (spec.type !== 'version' && spec.type !== 'range') return ''
+
         const range = dependencies[depName]
+
         const pkgs = R.values(pkgMap).filter(pkg => pkg.manifest.name === depName)
         if (!pkgs.length) return ''
         const versions = pkgs.map(pkg => pkg.manifest.version)
