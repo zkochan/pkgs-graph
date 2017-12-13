@@ -1,5 +1,5 @@
 import test = require('tape')
-import createPkgGraph from '../src'
+import createPkgGraph from 'pkgs-graph'
 import path = require('path')
 
 test('create package graph', t => {
