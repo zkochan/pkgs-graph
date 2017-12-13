@@ -18,6 +18,9 @@
   },
   "author": "Zoltan Kochan",
   "license": "MIT",
+  "engines": {
+    "node": ">=4"
+  },
   "bugs": {
     "url": "https://github.com/zkochan/pkgs-graph/issues"
   },
