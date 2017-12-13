@@ -66,4 +66,4 @@ console.log(graph)
 
 ## License
 
-[MIT](LICENSE) © [Zoltan Kochan](http://kochan.io)
+[MIT](LICENSE) © [Zoltan Kochan](https://www.kochan.io)
