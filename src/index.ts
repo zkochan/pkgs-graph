@@ -34,9 +34,10 @@ export default function (pkgs: Package[]): {
   const unmatched: Array<{pkgName: string, range: string}> = []
   const graph = Object.keys(pkgMap)
     .reduce((acc, pkgSpec) => {
-      acc[pkgSpec] = Object.assign({}, pkgMap[pkgSpec], {
+      acc[pkgSpec] = {
+        manifest: pkgMap[pkgSpec].manifest,
         dependencies: createNode(pkgMap[pkgSpec])
-      })
+      }
       return acc
     }, {})
 
@@ -57,7 +58,7 @@ export default function (pkgs: Package[]): {
           if (!matchedPkg) {
             return ''
           }
-          return createPkgSpec(matchedPkg!)
+          return matchedPkg!.path
         }
 
         if (spec.type !== 'version' && spec.type !== 'range') return ''
@@ -69,7 +70,7 @@ export default function (pkgs: Package[]): {
         const versions = pkgs.map(pkg => pkg.manifest.version)
         if (versions.indexOf(range) !== -1) {
           const matchedPkg = pkgs.find(pkg => pkg.manifest.name === depName && pkg.manifest.version === range)
-          return createPkgSpec(matchedPkg!)
+          return matchedPkg!.path
         }
         const matched = semver.maxSatisfying(versions, range)
         if (!matched) {
@@ -77,7 +78,7 @@ export default function (pkgs: Package[]): {
           return ''
         }
         const matchedPkg = pkgs.find(pkg => pkg.manifest.name === depName && pkg.manifest.version === matched)
-        return createPkgSpec(matchedPkg!)
+        return matchedPkg!.path
       })
       .filter(Boolean)
   }
@@ -88,19 +89,7 @@ function createPkgMap(pkgs: Package[]): {
 } {
   const pkgMap = {}
   for (let pkg of pkgs) {
-    const spec = createPkgSpec(pkg)
-    if (pkgMap[spec]) {
-      throw new Error(`There are two ${pkg.manifest.name} packages of the same version in the monorepo.
-        Either remove or ignore one of them.
-        One at ${pkgMap[spec].path}
-        The other at ${pkg.path}`)
-    }
-    pkgMap[spec] = pkg
+    pkgMap[pkg.path] = pkg
   }
   return pkgMap
-}
-
-function createPkgSpec(pkg: Package) {
-  if (!pkg.manifest.name || !pkg.manifest.version) return pkg.path
-  return `${pkg.manifest.name}@${pkg.manifest.version}`
 }

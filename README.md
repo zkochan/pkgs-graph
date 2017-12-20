@@ -24,21 +24,21 @@ const {graph} = createPkgsGraph([
         bar: '^1.0.0',
       },
     },
-    path: 'zkochan/src/foo',
+    path: '/home/zkochan/src/foo',
   },
   {
     manifest: {
       name: 'bar',
       version: '1.1.0',
     },
-    path: 'zkochan/src/bar',
+    path: '/home/zkochan/src/bar',
   }
 ])
 
 console.log(graph)
 //> {
-//    'foo@1.0.0': {
-//      dependencies: ['bar@1.1.0'],
+//    '/home/zkochan/src/foo': {
+//      dependencies: ['/home/zkochan/src/bar'],
 //      manifest: {
 //        name: 'foo',
 //        version: '1.0.0',
@@ -46,15 +46,13 @@ console.log(graph)
 //          bar: '^1.0.0',
 //        },
 //      },
-//      path: 'zkochan/src/foo',
 //    },
-//    'bar@1.1.0': {
+//    '/home/zkochan/src/bar': {
 //      dependencies: [],
 //      manifest: {
 //        name: 'bar',
 //        version: '1.1.0',
 //      },
-//      path: 'zkochan/src/bar',
 //    },
 //  }
 ```

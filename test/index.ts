@@ -45,7 +45,7 @@ test('create package graph', t => {
   ])
   t.deepEqual(result.unmatched, [{pkgName: 'bar', range: '^10.0.0'}])
   t.deepEqual(result.graph, {
-    'bar@1.0.0': {
+    '/zkochan/src/bar': {
       manifest: {
         name: 'bar',
         version: '1.0.0',
@@ -54,10 +54,9 @@ test('create package graph', t => {
           foo: '^1.0.0'
         }
       },
-      path: '/zkochan/src/bar',
-      dependencies: ['foo@1.0.0'],
+      dependencies: ['/zkochan/src/foo'],
     },
-    'foo@1.0.0': {
+    '/zkochan/src/foo': {
       manifest: {
         name: 'foo',
         version: '1.0.0',
@@ -65,10 +64,9 @@ test('create package graph', t => {
           bar: '^10.0.0'
         }
       },
-      path: '/zkochan/src/foo',
       dependencies: [],
     },
-    'bar@2.0.0': {
+    '/zkochan/src/bar@2': {
       manifest: {
         name: 'bar',
         version: '2.0.0',
@@ -76,15 +74,13 @@ test('create package graph', t => {
           foo: '^2.0.0'
         }
       },
-      path: '/zkochan/src/bar@2',
-      dependencies: ['foo@2.0.0'],
+      dependencies: ['/zkochan/src/foo@2'],
     },
-    'foo@2.0.0': {
+    '/zkochan/src/foo@2': {
       manifest: {
         name: 'foo',
         version: '2.0.0',
       },
-      path: '/zkochan/src/foo@2',
       dependencies: [],
     },
   })
@@ -134,7 +130,7 @@ test('create package graph for local directory dependencies', t => {
   ])
   t.deepEqual(result.unmatched, [{pkgName: 'bar', range: '^10.0.0'}])
   t.deepEqual(result.graph, {
-    'bar@1.0.0': {
+    '/zkochan/src/bar': {
       manifest: {
         name: 'bar',
         version: '1.0.0',
@@ -143,10 +139,9 @@ test('create package graph for local directory dependencies', t => {
           foo: '../foo'
         }
       },
-      path: '/zkochan/src/bar',
-      dependencies: ['foo@1.0.0'],
+      dependencies: ['/zkochan/src/foo'],
     },
-    'foo@1.0.0': {
+    '/zkochan/src/foo': {
       manifest: {
         name: 'foo',
         version: '1.0.0',
@@ -154,10 +149,9 @@ test('create package graph for local directory dependencies', t => {
           bar: '^10.0.0'
         }
       },
-      path: '/zkochan/src/foo',
       dependencies: [],
     },
-    'bar@2.0.0': {
+    '/zkochan/src/bar@2': {
       manifest: {
         name: 'bar',
         version: '2.0.0',
@@ -165,15 +159,13 @@ test('create package graph for local directory dependencies', t => {
           foo: 'file:../foo@2'
         }
       },
-      path: '/zkochan/src/bar@2',
-      dependencies: ['foo@2.0.0'],
+      dependencies: ['/zkochan/src/foo@2'],
     },
-    'foo@2.0.0': {
+    '/zkochan/src/foo@2': {
       manifest: {
         name: 'foo',
         version: '2.0.0',
       },
-      path: '/zkochan/src/foo@2',
       dependencies: [],
     },
   })
