@@ -15,7 +15,7 @@ npm i -g pkgs-graph
 ```js
 import createPkgsGraph from 'pkgs-graph'
 
-const graph = createPkgsGraph([
+const {graph} = createPkgsGraph([
   {
     manifest: {
       name: 'foo',

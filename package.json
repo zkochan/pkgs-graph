@@ -33,12 +33,9 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
-    "@types/common-tags": "^1.2.5",
     "@types/node": "^8.5.0",
     "@types/ramda": "^0.25.8",
     "@types/semver": "^5.3.31",
-    "chalk": "^2.3.0",
-    "common-tags": "^1.4.0",
     "find-packages": "^2.0.0",
     "npm-package-arg": "^6.0.0",
     "ramda": "^0.25.0",

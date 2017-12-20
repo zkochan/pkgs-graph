@@ -3,7 +3,7 @@ import createPkgGraph from 'pkgs-graph'
 import path = require('path')
 
 test('create package graph', t => {
-  const graph = createPkgGraph([
+  const result = createPkgGraph([
     {
       manifest: {
         name: 'bar',
@@ -43,7 +43,8 @@ test('create package graph', t => {
       path: '/zkochan/src/foo@2',
     },
   ])
-  t.deepEqual(graph, {
+  t.deepEqual(result.unmatched, [{pkgName: 'bar', range: '^10.0.0'}])
+  t.deepEqual(result.graph, {
     'bar@1.0.0': {
       manifest: {
         name: 'bar',
@@ -91,7 +92,7 @@ test('create package graph', t => {
 })
 
 test('create package graph for local directory dependencies', t => {
-  const graph = createPkgGraph([
+  const result = createPkgGraph([
     {
       manifest: {
         name: 'bar',
@@ -131,7 +132,8 @@ test('create package graph for local directory dependencies', t => {
       path: '/zkochan/src/foo@2',
     },
   ])
-  t.deepEqual(graph, {
+  t.deepEqual(result.unmatched, [{pkgName: 'bar', range: '^10.0.0'}])
+  t.deepEqual(result.graph, {
     'bar@1.0.0': {
       manifest: {
         name: 'bar',

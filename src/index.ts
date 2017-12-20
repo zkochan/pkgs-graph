@@ -1,14 +1,10 @@
 import findPackages from 'find-packages'
 import semver = require('semver')
-import commonTags = require('common-tags')
-import chalk from 'chalk'
 import R = require('ramda')
 import toposort = require('toposort')
 import npa = require('npm-package-arg')
 import path = require('path')
 
-const oneLine = commonTags.oneLine
-const highlight = chalk.yellow
 
 export type Manifest = {
   name: string,
@@ -33,9 +29,13 @@ export type PackageNode = Package & {
   dependencies: string[],
 }
 
-export default function (pkgs: Package[]): {[id: string]: PackageNode} {
+export default function (pkgs: Package[]): {
+  graph: {[id: string]: PackageNode},
+  unmatched: Array<{pkgName: string, range: string}>,
+} {
   const pkgMap = createPkgMap(pkgs)
-  const pkgNodeMap = Object.keys(pkgMap)
+  const unmatched: Array<{pkgName: string, range: string}> = []
+  const graph = Object.keys(pkgMap)
     .reduce((acc, pkgSpec) => {
       acc[pkgSpec] = Object.assign({}, pkgMap[pkgSpec], {
         dependencies: createNode(pkgMap[pkgSpec])
@@ -43,7 +43,7 @@ export default function (pkgs: Package[]): {[id: string]: PackageNode} {
       return acc
     }, {})
 
-  return pkgNodeMap
+  return {graph, unmatched}
 
   function createNode(pkg: Package): string[] {
     const dependencies = Object.assign({},
@@ -76,9 +76,7 @@ export default function (pkgs: Package[]): {[id: string]: PackageNode} {
         }
         const matched = semver.maxSatisfying(versions, range)
         if (!matched) {
-          console.warn(oneLine`
-            Cannot find local package ${highlight(depName)} satisfying ${highlight(range)}
-          `)
+          unmatched.push({pkgName: depName, range})
           return ''
         }
         const matchedPkg = pkgs.find(pkg => pkg.manifest.name === depName && pkg.manifest.version === matched)
