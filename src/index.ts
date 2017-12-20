@@ -1,10 +1,7 @@
-import findPackages from 'find-packages'
 import semver = require('semver')
 import R = require('ramda')
-import toposort = require('toposort')
 import npa = require('npm-package-arg')
 import path = require('path')
-
 
 export type Manifest = {
   name: string,
