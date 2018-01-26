@@ -33,7 +33,7 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
-    "@types/node": "^8.5.0",
+    "@types/node": "^9.4.0",
     "@types/ramda": "^0.25.8",
     "@types/semver": "^5.3.31",
     "npm-package-arg": "^6.0.0",
