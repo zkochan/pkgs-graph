@@ -1,6 +1,6 @@
 {
   "name": "pkgs-graph",
-  "version": "2.0.0-1",
+  "version": "2.0.0",
   "description": "Create a graph from an array of packages",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -20,7 +20,7 @@
     "name": "Zoltan Kochan",
     "email": "z@kochan.io",
     "url": "https://www.kochan.io/"
-},
+  },
   "license": "MIT",
   "engines": {
     "node": ">=4"
