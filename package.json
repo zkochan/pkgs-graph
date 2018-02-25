@@ -16,7 +16,11 @@
     "type": "git",
     "url": "git+https://github.com/zkochan/pkgs-graph.git"
   },
-  "author": "Zoltan Kochan",
+  "author": {
+    "name": "Zoltan Kochan",
+    "email": "z@kochan.io",
+    "url": "https://www.kochan.io/"
+},
   "license": "MIT",
   "engines": {
     "node": ">=4"
