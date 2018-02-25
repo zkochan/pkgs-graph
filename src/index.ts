@@ -51,7 +51,12 @@ export default function (pkgs: Package[]): {
 
     return Object.keys(dependencies)
       .map(depName => {
-        const spec = npa.resolve(depName, dependencies[depName], pkg.path)
+        let spec
+        try {
+          spec = npa.resolve(depName, dependencies[depName], pkg.path)
+        } catch (err) {
+          return ''
+        }
 
         if (spec.type === 'directory') {
           const matchedPkg = R.values(pkgMap).find(pkg => pkg.path === spec.fetchSpec)

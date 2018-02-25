@@ -94,6 +94,7 @@ test('create package graph for local directory dependencies', t => {
         name: 'bar',
         version: '1.0.0',
         dependencies: {
+          'weird-dep': ':aaaaa', // weird deps are skipped
           'is-positive': '1.0.0',
           foo: '../foo'
         }
@@ -135,6 +136,7 @@ test('create package graph for local directory dependencies', t => {
         name: 'bar',
         version: '1.0.0',
         dependencies: {
+          'weird-dep': ':aaaaa',
           'is-positive': '1.0.0',
           foo: '../foo'
         }
