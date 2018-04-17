@@ -33,7 +33,7 @@
     "@types/tape": "^4.2.29",
     "package-preview": "^1.0.3",
     "tape": "^4.6.3",
-    "ts-node": "^5.0.0",
+    "ts-node": "^6.0.0",
     "typescript": "^2.2.2"
   },
   "dependencies": {
