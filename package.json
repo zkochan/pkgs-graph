@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@types/node": "^9.4.0",
-    "@types/ramda": "^0.25.8",
+    "@types/ramda": "^0.26.0",
     "@types/semver": "^5.3.31",
     "npm-package-arg": "^6.0.0",
     "ramda": "^0.25.0",
