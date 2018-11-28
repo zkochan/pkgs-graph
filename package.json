@@ -37,10 +37,10 @@
     "typescript": "^3.0.0"
   },
   "dependencies": {
-    "@types/node": "^9.4.0",
+    "@types/node": "^9.4.0 || 10",
     "@types/ramda": "^0.26.0",
     "@types/semver": "^5.3.31",
-    "npm-package-arg": "^6.0.0",
+    "@zkochan/npm-package-arg": "^1.0.0",
     "ramda": "^0.26.0",
     "semver": "^5.3.0"
   }

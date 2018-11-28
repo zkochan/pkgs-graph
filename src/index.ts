@@ -1,7 +1,6 @@
 import semver = require('semver')
 import R = require('ramda')
-import npa = require('npm-package-arg')
-import path = require('path')
+import npa = require('@zkochan/npm-package-arg')
 
 export type Manifest = {
   name: string,
