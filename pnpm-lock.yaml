@@ -4,7 +4,7 @@ dependencies:
   '@types/semver': 5.5.0
   '@zkochan/npm-package-arg': 1.0.2
   ramda: 0.26.1
-  semver: 6.3.0
+  semver: 7.0.0
 devDependencies:
   '@types/tape': 4.2.33
   package-preview: 3.0.0
@@ -989,6 +989,11 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
+  /semver/7.0.0:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==
   /shebang-command/1.2.0:
     dependencies:
       shebang-regex: 1.0.0
@@ -1357,7 +1362,7 @@ specifiers:
   '@zkochan/npm-package-arg': ^1.0.0
   package-preview: ^3.0.0
   ramda: ^0.26.0
-  semver: ^6.0.0
+  semver: ^7.0.0
   tape: ^4.6.3
   ts-node: ^8.0.3
   typescript: ^3.0.0
