@@ -1,3 +1,5 @@
+> moved to https://github.com/pnpm/pnpm/tree/master/packages/pkgs-graph
+
 # pkgs-graph
 
 > Create a graph from an array of packages
